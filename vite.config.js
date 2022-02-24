@@ -2,34 +2,34 @@
  * @Author: cash
  * @Date: 2021-08-30 15:59:35
  * @LastEditors: cash
- * @LastEditTime: 2021-09-06 14:33:11
+ * @LastEditTime: 2021-11-05 11:32:53
  * @Description: file content
  * @FilePath: \hdl-try\vite.config.js
  */
-import { defineConfig,loadEnv } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { defineConfig, loadEnv } from 'vite';
+import vue from '@vitejs/plugin-vue';
 import { resolve } from 'path';
-import autoprefixer from "autoprefixer"
-// import viteSvgIcons from 'vite-plugin-svg-icons'
+import autoprefixer from 'autoprefixer';
+import viteSvgIcons from 'vite-plugin-svg-icons';
 
-function resolvePath(dir){
-  return resolve(__dirname,'.',dir)
+function resolvePath(dir) {
+  return resolve(__dirname, '.', dir);
 }
 
 // console.log(process.env);
 // https://vitejs.dev/config/
-export default defineConfig(({mode})=>{
-  const env = loadEnv(mode, __dirname)
-  const isProduction = env.VITE_NODE_ENV === 'production'
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, __dirname);
+  const isProduction = env.VITE_NODE_ENV === 'production';
   return {
     plugins: [
       vue(),
-      autoprefixer
+      autoprefixer,
       // // 自动导入svg图标
-      // viteSvgIcons({
-      //   iconDirs: [resolve(process.cwd(), 'src/public')],
-      //   symbolId: 'icon-[dir]-[name]'
-      // })
+      viteSvgIcons({
+        iconDirs: [resolve(process.cwd(), 'src/public')],
+        symbolId: 'icon-[dir]-[name]',
+      }),
     ],
     // 项目根目录
     root: process.cwd(),
@@ -41,20 +41,20 @@ export default defineConfig(({mode})=>{
     define: '',
     // 静态资源服务的文件夹
     publicDir: 'assets',
-    resolve:{
-      alias:{
-        "@":resolvePath('src')
-      }
-    },
-    server:{
-      port:8096,
-      open:true,
-      overlay:{
-        warning:false,
-        errors:true
+    resolve: {
+      alias: {
+        '@': resolvePath('src'),
       },
-      lintOnSave:false,
-      proxy:{
+    },
+    server: {
+      port: 8096,
+      open: true,
+      overlay: {
+        warning: false,
+        errors: true,
+      },
+      lintOnSave: false,
+      proxy: {
         // '/api':{
         //   target::'/',
         //   changeOrigin:true,
@@ -65,17 +65,23 @@ export default defineConfig(({mode})=>{
       hmr: { overlay: false },
     },
     build: {
-      outDir:`dist`,
-       // 生产环境移除console
+      outDir: `dist`,
+      // 生产环境移除console
       terserOptions: {
-       compress: {
-         drop_console: true,
-         drop_debugger: true
-       }
-      }
+        compress: {
+          drop_console: true,
+          drop_debugger: true,
+        },
+      },
     },
     // CSS 预处理器
     css: {
+      //* css模块化
+      modules: {
+        // css模块化 文件以.module.[css|less|scss]结尾
+        generateScopedName: '[name]__[local]___[hash:base64:5]',
+        hashPrefix: 'prefix',
+      },
       preprocessorOptions: {
         less: {
           modifyVars: {
@@ -84,6 +90,9 @@ export default defineConfig(({mode})=>{
             // hack: `true; @import (reference) "${resolve('src/design/config.less')}";`,
             // ↓这行代码下一章讲
             // ...generateModifyVars(),
+            'primary-color': '#F35C1D',
+            'link-color': '#F35C1D',
+            'border-radius-base': '4px',
           },
           javascriptEnabled: true,
         },
@@ -100,5 +109,5 @@ export default defineConfig(({mode})=>{
       ],
       exclude: ['vue-demi'],
     },
-  }
-})
+  };
+});

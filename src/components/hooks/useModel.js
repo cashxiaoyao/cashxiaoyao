@@ -2,7 +2,7 @@
  * @Author: cash
  * @Date: 2021-09-07 10:59:29
  * @LastEditors: cash
- * @LastEditTime: 2021-11-03 10:28:04
+ * @LastEditTime: 2021-11-05 09:35:45
  * @Description: file content
  * @FilePath: \hdl-try\src\components\hooks\useModel.js
  */
@@ -18,13 +18,19 @@ export function useAuth(){
   const getRoleAuth = async (opt)=>{
     const res = await roleAuth(opt)
     if (res.code === 0) {
-      state.menuList = res.data.filter(item => {
-        return item.menuCode === 'systemSet'
-      })
-      state.menuList1 = res.data.filter(item => {
-        return item.menuCode === 'message'
-      })
+      if(opt.sysCode==='iot-common'){
+        state.menuList = filterData(res.data,'systemSet')
+        state.menuList1 = filterData(res.data,'message')
+      } else {
+        sessionStorage.setItem('menus', JSON.stringify(res.data))
+        state.menuList = res.data.filter(item => item.menuName !== '系统设置')
+      }
+    } else {
+      state.menuList = []
     }
+  }
+  const filterData=(list,type)=>{
+    return list.filter(item=>item.menuCode===type)
   }
   return {state,getRoleAuth}
 }

@@ -1,3 +1,11 @@
+/*
+ * @Author: cash
+ * @Date: 2021-08-31 16:20:11
+ * @LastEditors: cash
+ * @LastEditTime: 2021-11-05 17:19:31
+ * @Description: file content
+ * @FilePath: \hdl-try\src\api\api.js
+ */
 import http from '../utils/http'
 //
 /**
@@ -49,4 +57,15 @@ export function logList (params) {
 
 export function systemList (params) {
   return http.post(`${request}/company/manage/getSysList`, params, false)
+}
+
+
+// 判断当前子系统是否有权限
+export function checkoutSysAuth (params) {
+  return http.post(`${request}/user/manage/checkCompanyParterSysInfo`,params,false)
+}
+
+// 产品分类
+export function categoryList (params) {
+  return http.post('/smart-footstone/mgmt/product/category/list', params, false)
 }

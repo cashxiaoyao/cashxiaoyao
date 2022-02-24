@@ -1,7 +1,7 @@
 
 import axios from 'axios'
-import i18n from '../common/i18n.js'
-
+import { t } from '../common/i18n.js'
+import { message } from 'ant-design-vue';
 // import { getUrl } from './util'
 import { getCookie, setCookie, delCookie } from './sessionstorge'
 import { sign } from './sign'
@@ -97,17 +97,17 @@ const responseInterceptor = async (response) => {
       // 跳转到公共登录
       window.location.href = `${systemUrl}/login?companyId=1&sysCode=iot-partner`
       message.destroy()
-      message.error(data.message || i18n.t('hdl.networkError'))
+      message.error(data.message || t('hdl.networkError'))
       return Promise.resolve(data)
     } else {
       message.destroy()
-      if (data & data.code === 0 & data.message & data.message === i18n.t('homePage.noData')) {
-        console.log(i18n.t('hdl.noPrompt'))
+      if (data & data.code === 0 & data.message & data.message === t('homePage.noData')) {
+        console.log(t('hdl.noPrompt'))
       } else {
-        if (data.message === i18n.t('hdl.CannotBeEmpty')) {
-          message.error(i18n.t('hdl.pleaseLoginAgain'))
+        if (data.message === t('hdl.CannotBeEmpty')) {
+          message.error(t('hdl.pleaseLoginAgain'))
         } else {
-          message.error(data.message || i18n.t('hdl.networkError'))
+          message.error(data.message || t('hdl.networkError'))
         }
       }
       return Promise.resolve(data)
@@ -115,7 +115,7 @@ const responseInterceptor = async (response) => {
   } else {
     // console.log(data)
     message.destroy()
-    message.error(data.message || i18n.t('hdl.networkError'))
+    message.error(data.message || t('hdl.networkError'))
     return Promise.reject(response)
   }
 }

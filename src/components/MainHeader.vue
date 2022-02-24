@@ -2,7 +2,7 @@
  * @Author: cash
  * @Date: 2021-08-31 16:22:12
  * @LastEditors: cash
- * @LastEditTime: 2021-11-03 11:36:16
+ * @LastEditTime: 2021-11-04 17:57:29
  * @Description: file content
  * @FilePath: \hdl-try\src\components\MainHeader.vue
 -->
@@ -123,7 +123,6 @@ import {
   onMounted,
 } from 'vue';
 import { getCookie, delCookie, setCookie } from '@/utils/sessionstorge';
-import { loginOut, moditifyPsd, roleAuth, systemList } from '@/api/api';
 import myForm from './myForm.vue';
 import { Modal,message } from 'ant-design-vue';
 import { useRouter } from 'vue-router';
@@ -151,12 +150,13 @@ export default defineComponent({
       account: getCookie('accountIot'),
       systemUrl: '',
     });
+    
     const { state, getRoleAuth } = useAuth();
     const { list, getSystemList } = useList();
     const { getUrlVars } = useUrlParams();
     const { t } = useI18n()
+
     onMounted(() => {
-      // console.log(t);
       data.systemUrl =
         import.meta.env.VITE_NODE_ENV === 'test'
           ? 'http://47.114.131.143:9012/#'
@@ -184,7 +184,6 @@ export default defineComponent({
         sysPlatform: 'iot_platform',
       });
     });
-
 
     const handleBasic = () => {
       const router = useRouter();
@@ -243,15 +242,27 @@ export default defineComponent({
       window.open(url)
     };
 
+    const handleItem = (type)=>{
+      if (type === 1) {
+        window.open(`${data.systemUrl}/message/messageList?type=1`)
+        setCookie('openKeys', 'message', 'd1')
+        setCookie('selectedKeys', '/message/messageList', 'd1')
+      } else {
+        window.open(`${data.systemUrl}/systemSet/departManage?type=1`)
+        setCookie('openKeys', 'systemSet', 'd1')
+        setCookie('selectedKeys', '/systemSet/departManage', 'd1')
+      }
+    };
+
     return {
       ...toRefs(list),
       ...toRefs(state),
       ...toRefs(data),
-      roleAuth,
       handleBasic,
       showModal,
       handleLoginOut,
       handleSubSystem,
+      handleItem,
     };
   },
 });

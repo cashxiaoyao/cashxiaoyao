@@ -1,7 +1,7 @@
-import i18n from '../common/i18n.js'
-import Vue from 'vue'
-import { Message } from "ant-design-vue";
-Vue.use(Message);
+import {t} from "@/common/i18n.js";
+// import Vue from 'vue'
+// import { message } from "ant-design-vue";
+// Vue.use(message);
 
 export function download (url) {
   if (url && Object.prototype.toString.call(url) === '[object String]') {
@@ -53,7 +53,7 @@ export function checkPhone(rule, value, callback) {
   let regex = /^1[0-9]{10}$/; //手机号
   if (value && !regex.test(value)) {
     //react使用正则表达式变量的test方法进行校验，直接使用value.match(regex)显示match未定义
-    callback(i18n.$t('hdl.PLCorrectPhoneNumber'));
+    callback(t('hdl.PLCorrectPhoneNumber'));
   } else {
     callback();
   }
@@ -62,7 +62,7 @@ export function checkPhone(rule, value, callback) {
 export function checkAlipay(rule, value, callback) {
   let regex = /^((\w)+(\.\w+)*@([\w-])+((\.[\w-]+)+)|(1\d{10}))$/; //支付宝账号
   if (value && !regex.test(value)) {
-    callback(i18n.$t('hdl.PLCorrectAlipayAccount'));
+    callback(t('hdl.PLCorrectAlipayAccount'));
   } else {
     callback();
   }
@@ -71,7 +71,7 @@ export function checkAlipay(rule, value, callback) {
 export function checkTel(rule, value, callback) {
   let regex = /^((0\d{2,3}-\d{7,8})|(1\d{10}))$/; //固话或者手机号
   if (value && !regex.test(value)) {
-    callback(i18n.$t('hdl.PLCorrectFixedLine'));
+    callback(t('hdl.PLCorrectFixedLine'));
   } else {
     callback();
   }
@@ -80,7 +80,7 @@ export function checkTel(rule, value, callback) {
 export function checkHttp(rule, value, callback) {
   let regex = /^(http[s]?|ftp):\/\/[^\\/\\.]+?\..+(\w|\/)$/; //网址
   if (value && !regex.test(value)) {
-    callback(i18n.$t('hdl.PLCorrectWebsite'));
+    callback(t('hdl.PLCorrectWebsite'));
   } else {
     callback();
   }
@@ -89,7 +89,7 @@ export function checkHttp(rule, value, callback) {
 export function checkEmail(rule, value, callback) {
   let regex = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
   if (value && !regex.test(value)) {
-    callback(i18n.$t('homePage.PLEmail'));
+    callback(t('homePage.PLEmail'));
   } else {
     callback();
   }
